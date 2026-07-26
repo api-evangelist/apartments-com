@@ -1,0 +1,102 @@
+aid: apartments-com
+name: Apartments.com
+kind: company
+description: >-
+  Apartments.com is the largest United States rental-listings marketplace, owned
+  by CoStar Group since its 2014 acquisition and operated from Arlington,
+  Virginia as the anchor of the Apartments.com Network — a group of consumer
+  rental sites that also includes ApartmentFinder.com, ApartmentHomeLiving.com,
+  ForRent.com, ForRentUniversity.com, WestsideRentals.com, Apartamentos.com,
+  After55.com and CorporateHousing.com. It sits on the demand side of the US
+  residential value chain as an Internet Listing Service (ILS): apartment owners
+  and property managers buy advertising, and their inventory, availability,
+  pricing, media, concessions and fee data flows in from property management
+  systems (Yardi, RealPage, Entrata, MRI, AppFolio, ResMan, Rent Manager,
+  Funnel, EliseAI and others) rather than from any public API, while leads flow
+  back out to the advertiser's CRM. Its API posture is closed. Apartments.com
+  publishes no developer portal, no OpenAPI or OData $metadata contract, no SDK,
+  no webhooks and no Postman collection; developer.apartments.com,
+  developers.apartments.com and docs.apartments.com do not resolve in DNS, and
+  api.apartments.com resolves only to the same Akamai edge that returns HTTP 403
+  Access Denied to every non-browser request, including robots.txt. The one
+  documented machine-to-machine seam is the Digital Feeds Program — an
+  approval-and-contract path in which an approved third-party feed vendor
+  syndicates a paying advertiser's listings into Apartments.com over FTP using
+  an XML listings feed whose specification guide is available only on request to
+  Feeds@apartments.com. A second inbound seam lets licensed agents opt in to
+  rental-listing syndication through their own MLS (Bright MLS, ARMLS,
+  REcolorado, OneKey MLS, SmartMLS, NorthstarMLS, MLS PIN, Garden State MLS, New
+  Jersey MLS and Aspen Glenwood MLS are documented), which requires MLS
+  membership. On RESO, the honest reading is absence rather than
+  "certified but unreachable": Apartments.com does not appear anywhere in the
+  RESO certificates list, and its own property-manager help centre returns zero
+  results for "RESO". It is a consumer of MLS rental feeds, not a certified
+  RESO endpoint, and no unlicensed open dataset is published.
+accessModel:
+  pricing: enterprise
+  onboarding: approval
+  trial: false
+  try_now: false
+  public: false
+  label: Partner-only · Advertising contract + approved feed vendor
+  confidence: high
+  source:
+  - documentation
+  generated: '2026-07-26'
+  method: manual
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
+tags:
+- Real Estate
+- United States
+- Rentals
+- Property Listings
+- Multifamily
+- Internet Listing Service
+- Listings Syndication
+- Property Management
+- MLS
+- PropTech
+- CoStar Group
+created: '2026-07-26'
+modified: '2026-07-26'
+specificationVersion: '0.19'
+url: https://raw.githubusercontent.com/api-evangelist/apartments-com/refs/heads/main/apis.yml
+apis: []
+common:
+- type: Website
+  url: https://www.apartments.com
+- type: About
+  url: https://www.apartments.com/about
+- type: Parent
+  url: https://www.costargroup.com/about-us/brands/apartmentscom
+- type: Support
+  url: https://propertyhelp.apartments.com/
+- type: Documentation
+  url: https://propertyhelp.apartments.com/collection/1044-ils-integrations
+- type: Documentation
+  url: https://propertyhelp.apartments.com/collection/1201-mls-integrations
+- type: Documentation
+  url: https://propertyhelp.apartments.com/article/439-what-is-a-feed
+- type: Documentation
+  url: https://ecom.apartments.com/advertise/resources/listings-feed-program
+- type: Partners
+  url: https://www.apartments.com/advertise/advfeeds
+- type: Contact
+  url: mailto:Feeds@apartments.com
+- type: Support
+  url: https://renterhelp.apartments.com/
+- type: Product
+  url: https://www.apartments.com/rental-manager
+- type: GitHubOrganization
+  url: https://github.com/AptsCom
+- type: LinkedIn
+  url: https://www.linkedin.com/company/apartments-com
+- type: Twitter
+  url: https://x.com/apartmentscom
+- type: YouTube
+  url: https://www.youtube.com/@apartmentscom
+- type: Instagram
+  url: https://www.instagram.com/apartmentscom/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

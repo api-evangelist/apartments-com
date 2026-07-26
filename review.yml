@@ -1,0 +1,350 @@
+aid: apartments-com
+name: Apartments.com
+review:
+  question: >-
+    Does Apartments.com expose a public, documented developer API — and is it
+    RESO-certified or otherwise reachable without a commercial or membership
+    relationship?
+  answer: false
+  date: '2026-07-26'
+  reviewer: API Evangelist
+  homeMarket: United States
+  tier: rental-listings
+findings:
+  summary: |
+    Apartments.com (CoStar Group) publishes no public developer surface of any
+    kind. There is no developer portal, no OpenAPI or Swagger document, no OData
+    $metadata, no GraphQL schema, no AsyncAPI, no webhooks, no SDK and no
+    Postman collection. The apex domain and every path under it are served from
+    an Akamai edge that returns "HTTP 403 Access Denied" to any non-browser
+    client, including /robots.txt, so even the marketing HTML is not machine
+    reachable. The only documented machine-to-machine seams are INBOUND: the
+    Digital Feeds Program (an approved third-party feed vendor pushes an
+    advertiser's XML listings feed over FTP) and per-MLS rental-listing
+    syndication opt-in. Both require a signed relationship before any bytes
+    move, and neither ships a published contract.
+  reso:
+    certified: false
+    posture: >-
+      No RESO certification found. Apartments.com is a downstream CONSUMER of
+      MLS rental listings via per-MLS opt-in, not a certified RESO Web API
+      endpoint.
+    webApiCertification: none found
+    dataDictionaryCertification: none found
+    dataDictionaryVersion: n/a
+    universalPropertyIdentifier: no UPI reference found on any reachable
+      Apartments.com surface
+    odataMetadataDocument: none — https://api.apartments.com/$metadata and
+      https://www.apartments.com/$metadata both return HTTP 403 (Akamai Access
+      Denied), and no OData service root is documented anywhere
+    directoryEvidence:
+      - probe: https://www.reso.org/certificates/
+        status: 200
+        date: '2026-07-26'
+        result: >-
+          Page carries 578 distinct certification.reso.org/summary/{id} links.
+          Case-insensitive search of the rendered text for "CoStar",
+          "Apartments", and "Homes.com" returns 0 matches (for comparison,
+          "Zillow" and "Bright MLS" each return 1). No CoStar Group entity
+          appears in the RESO certificates list.
+      - probe: https://certification.reso.org/
+        status: 400
+        date: '2026-07-26'
+        result: >-
+          RESO's certification directory app returns HTTP 400 to non-browser
+          clients at the root and at /summary/C00000001, /search and
+          /api/certificates, so it could not be queried programmatically. The
+          reso.org/certificates/ listing above was used instead.
+      - probe: https://propertyhelp.apartments.com/search?query=reso
+        status: 200
+        date: '2026-07-26'
+        result: >-
+          ZERO articles returned. Apartments.com's own property-manager help
+          centre never mentions RESO. A query for "rets" returns only an MLS
+          opt-in article (Garden State MLS) matched on other terms; a query for
+          "webhook" returns zero articles.
+    mlsRelationship: >-
+      Apartments.com receives rental listings from MLSs when a licensed agent or
+      broker opts in inside their own MLS system. Ten MLSs are individually
+      documented at
+      https://propertyhelp.apartments.com/collection/1201-mls-integrations
+      (HTTP 200): Bright MLS, ARMLS, REcolorado, OneKey MLS, SmartMLS,
+      Northstar MLS, MLS Property Information Network, Garden State MLS,
+      New Jersey MLS, and Aspen Glenwood MLS. The direction of travel is INTO
+      Apartments.com. Nothing flows back out to a developer.
+    caveat: >-
+      Sibling CoStar brand Homes.com is publicly described (RESO/third-party
+      write-ups) as having standardised its MLS ingestion on the RESO Data
+      Dictionary and Web API. That is a claim about Homes.com's data pipeline,
+      not about Apartments.com, and it is NOT a certification. It is recorded
+      here only so the two facts are never conflated.
+  accessGate:
+    classification: partner-only
+    whatADeveloperMustSignOrJoin: |
+      There is no path by which an independent developer obtains credentials.
+      Two documented relationships exist, both inbound:
+        1. DIGITAL FEEDS PROGRAM. You must (a) be a paying Apartments.com
+           advertiser with listings, (b) apply by emailing Feeds@apartments.com
+           or via https://www.apartments.com/advertise/advfeeds, and (c) route
+           your data through an approved third-party feed vendor. The
+           Apartments.com listings-feed XML guide is not published — it is
+           supplied on request. Transport documented in the help centre is FTP
+           (the MRI Market Connect article requires FTP Server Name, FTP Login
+           and FTP Password to register a new ILS).
+        2. MLS SYNDICATION OPT-IN. You must hold membership in a participating
+           MLS and toggle Apartments.com syndication inside that MLS's own
+           system. This requires MLS membership plus, in practice, a real-estate
+           licence.
+      Neither issues an API key. Neither returns data to the caller.
+    readAccessToListingData: none published at any price via a first-party
+      interface; the only "Apartments.com APIs" on the open web are unofficial
+      third-party scrapers (Apify, PropAPIS, RapidAPI-style listings) that are
+      not operated by or endorsed by Apartments.com and are not recorded here.
+    selfServeDeveloperPortal: false
+  openData:
+    exists: false
+    note: >-
+      Apartments.com publishes no open, unlicensed, publicly callable dataset.
+      All listing content is proprietary CoStar Group inventory attached to paid
+      advertising, or licensed MLS content syndicated under MLS rules. Unlike
+      the UK/AU government counterweight (HM Land Registry Price Paid, Ordnance
+      Survey open products), the US rental market has no equivalent open
+      publication and Apartments.com adds none.
+  authModel:
+    scheme: none published
+    detail: >-
+      No API key, OAuth 2.0, OpenID Connect or SAML developer scheme is
+      documented. Feed authentication is FTP username/password issued
+      out-of-band between the feed vendor and Apartments.com. Advertiser and
+      renter accounts use ordinary web session logins on
+      https://www.apartments.com (403 to non-browser clients).
+    openidConfiguration: >-
+      https://www.apartments.com/.well-known/openid-configuration and
+      https://api.apartments.com/.well-known/openid-configuration both return
+      HTTP 403 (Akamai Access Denied) — not a JSON discovery document.
+  webhooksEventsSdksPostman:
+    webhooks: none documented (help-centre search for "webhook" returns zero
+      articles)
+    events: none documented
+    sdks: none published
+    postman: none published
+    cli: none published
+    graphql: none documented
+    note: >-
+      Absence is the finding. The nearest thing to event delivery is lead
+      routing — Apartments.com pushes enquiry leads into an advertiser's CRM
+      through the PMS/CRM vendor's own integration (Yardi, Rent Manager,
+      WelcomeHome, EliseAI), configured in the vendor's product, not by an
+      Apartments.com-published contract.
+  productApiFamily:
+    note: >-
+      Apartments.com's real segmentation, taken from the surfaces that answered,
+      is a product taxonomy rather than an API taxonomy. None of these are
+      exposed as callable APIs.
+    segments:
+      - listings-and-syndication: connect/update listings via ILS feed;
+          per-MLS rental syndication opt-in
+      - media: unit-level images, virtual tours, MyMedia
+      - pricing-and-concessions: price by lease term / move-in date,
+          concessions (e.g. RealPage OneSite GetConcessions), fee transparency
+      - availability-and-occupancy: occupancy reporting (e.g. Yardi Voyager)
+      - leads-and-attribution: True Leads, lead attribution and CRM delivery
+      - online-leasing: apply-now, tour scheduling, applications and screening
+      - tenancy-and-payments: Rental Manager landlord tools — leases, payments,
+          applications, screening, 1099-K
+  githubPresence:
+    org: https://github.com/AptsCom
+    verified: true
+    detail: >-
+      GitHub organisation "Apartments.com" (login AptsCom, blog
+      http://www.apartments.com), 15 public repositories, all forks or training
+      scaffolding, newest first-party content circa 2014. Zero API artifacts.
+      Parent org https://github.com/CoStarGroup — "The Leader in Commercial Real
+      Estate Information and Online Marketplaces", Washington DC, 5 public
+      repositories, all JavaScript tooling forks. Zero API artifacts.
+probes:
+  date: '2026-07-26'
+  userAgent: Chrome 126 desktop UA via curl -L
+  results:
+    - url: https://www.apartments.com/
+      status: 403
+      note: Akamai "Access Denied" (errors.edgesuite.net reference) — blanket bot block
+    - url: https://apartments.com/
+      status: 403
+    - url: https://www.apartments.com/about/
+      status: 403
+    - url: https://www.apartments.com/robots.txt
+      status: 403
+      note: even robots.txt is blocked
+    - url: https://developer.apartments.com/
+      status: 000
+      note: NXDOMAIN — does not resolve
+    - url: https://developers.apartments.com/
+      status: 000
+      note: NXDOMAIN — does not resolve
+    - url: https://docs.apartments.com/
+      status: 000
+      note: NXDOMAIN — does not resolve
+    - url: https://partners.apartments.com/
+      status: 000
+      note: NXDOMAIN — does not resolve
+    - url: https://feeds.apartments.com/
+      status: 000
+      note: NXDOMAIN — does not resolve
+    - url: https://data.apartments.com/
+      status: 000
+      note: NXDOMAIN — does not resolve
+    - url: https://api.apartments.com/
+      status: 403
+      note: >-
+        Resolves, but to the identical Akamai edge as www
+        (www-ipv6.apartments.com.edgekey.net -> e9769.dsca.akamaiedge.net ->
+        23.52.154.60). Not a distinct API host.
+    - url: https://api.apartments.com/v1
+      status: 403
+    - url: https://api.apartments.com/openapi.json
+      status: 403
+    - url: https://api.apartments.com/swagger.json
+      status: 403
+    - url: https://api.apartments.com/docs
+      status: 403
+    - url: https://api.apartments.com/$metadata
+      status: 403
+    - url: https://api.apartments.com/.well-known/openid-configuration
+      status: 403
+    - url: https://www.apartments.com/developers/
+      status: 403
+    - url: https://www.apartments.com/api/
+      status: 403
+    - url: https://www.apartments.com/docs/
+      status: 403
+    - url: https://www.apartments.com/openapi.json
+      status: 403
+    - url: https://www.apartments.com/swagger.json
+      status: 403
+    - url: https://www.apartments.com/api-docs
+      status: 403
+    - url: https://www.apartments.com/$metadata
+      status: 403
+    - url: https://www.apartments.com/.well-known/openid-configuration
+      status: 403
+    - url: https://www.apartments.com/.well-known/security.txt
+      status: 403
+    - url: https://www.apartments.com/advertise/faqfeeds
+      status: 403
+    - url: https://www.apartments.com/advertise/advfeeds
+      status: 403
+    - url: https://www.apartments.com/grow/mls
+      status: 403
+    - url: https://www.apartments.com/grow/faq
+      status: 403
+    - url: https://www.apartments.com/grow/integrations
+      status: 403
+    - url: https://www.apartments.com/rental-manager
+      status: 403
+    - url: https://ecom.apartments.com/advertise/resources/listings-feed-program
+      status: 403
+      note: >-
+        Indexed by search engines as the Listings Feed Program page; blocked to
+        us, so its contents are recorded below as search-snippet evidence only,
+        not as verified fetch.
+    - url: https://propertyhelp.apartments.com/
+      status: 200
+      note: HelpScout-hosted property owner/manager help centre — the ONLY
+        reachable documentation surface
+    - url: https://propertyhelp.apartments.com/collection/1044-ils-integrations
+      status: 200
+    - url: https://propertyhelp.apartments.com/collection/1201-mls-integrations
+      status: 200
+    - url: https://propertyhelp.apartments.com/article/439-what-is-a-feed
+      status: 200
+    - url: https://propertyhelp.apartments.com/article/1041-how-do-i-connect-my-listing-to-apartmentscom-using-mri-market-connect
+      status: 200
+      note: documents FTP Server Name / FTP Login / FTP Password as the transport
+    - url: https://renterhelp.apartments.com/
+      status: 200
+    - url: https://www.reso.org/certificates/
+      status: 200
+    - url: https://certification.reso.org/
+      status: 400
+    - url: https://api.github.com/orgs/AptsCom
+      status: 200
+    - url: https://api.github.com/orgs/CoStarGroup
+      status: 200
+    - url: https://www.linkedin.com/company/apartments-com
+      status: 200
+    - url: https://x.com/apartmentscom
+      status: 200
+    - url: https://www.youtube.com/@apartmentscom
+      status: 200
+    - url: https://www.instagram.com/apartmentscom/
+      status: 200
+    - url: https://www.costargroup.com/about-us/brands/apartmentscom
+      status: 403
+    - url: https://developer.costar.com/
+      status: 000
+      note: NXDOMAIN — parent has no developer host either
+quotes:
+  - source: https://propertyhelp.apartments.com/article/439-what-is-a-feed
+    text: >-
+      "A feed is a third party vendor who will syndicate the listing into
+      Apartments.com. There are numerous data feed providers, and our Digital
+      Feeds Program will set you up with the best one that fits your needs. ...
+      Ready to learn more or apply for the Digital Feeds Program? If so, be sure
+      to email us at Feeds@apartments.com or visit our page about the Digital
+      Feeds Program."
+  - source: https://propertyhelp.apartments.com/article/1041-how-do-i-connect-my-listing-to-apartmentscom-using-mri-market-connect
+    text: >-
+      "Prerequisites — You must identify the following FTP server information
+      from the ILS you wish to add: FTP Server Name, FTP Login (Username), FTP
+      Password."
+unverifiedSnippets:
+  - claim: >-
+      The Apartments.com property data feed is based on the MITS feed format and
+      requires an XML file created by the vendor's technical team; the
+      Apartments.com Listings feed XML Guide is available on request. The
+      advertise/faqfeeds page is reported to say Apartments.com accepts RETS and
+      IDX feeds (.csv) as well as XML, and the grow/mls page to say it accepts
+      API, RETS, IDX and XML from MLSs.
+    sourcePages:
+      - https://ecom.apartments.com/advertise/resources/listings-feed-program
+      - https://www.apartments.com/advertise/faqfeeds
+      - https://www.apartments.com/grow/mls
+    status: NOT VERIFIED
+    reason: >-
+      All three pages return HTTP 403 to every client we control. The wording
+      above comes from search-engine snippets only. It is recorded so the seam
+      is not lost, and is deliberately NOT asserted in apis.yml.
+sources:
+  - url: https://propertyhelp.apartments.com/
+    type: Documentation
+    note: Property Owner and Manager Help Center — ILS + MLS integration collections
+  - url: https://propertyhelp.apartments.com/collection/1044-ils-integrations
+    type: Documentation
+    note: >-
+      PMS integrations documented: AppFolio, Yardi (RentCafe, Voyager, Breeze),
+      RealPage (LeaseStar / Marketing Center / OneSite), Rent Manager (12 and
+      Express), Entrata, ResMan, MRI Market Connect, Funnel, EliseAI, Fortress,
+      Engrain, Rhenti.
+  - url: https://propertyhelp.apartments.com/collection/1201-mls-integrations
+    type: Documentation
+    note: Ten per-MLS rental-syndication opt-in articles
+  - url: https://www.reso.org/certificates/
+    type: Reference
+    note: 578 certificate entries; no CoStar Group entity present
+  - url: https://github.com/AptsCom
+    type: GitHubOrganization
+    note: 15 public repos, no API artifacts
+  - url: https://github.com/CoStarGroup
+    type: GitHubOrganization
+    note: 5 public repos, no API artifacts
+actions:
+  apisListed: 0
+  openapiHarvested: false
+  specsCount: 0
+  openapiDirectoryCreated: false
+  reason: >-
+    Nothing real was found to harvest. No OpenAPI, Swagger, OData $metadata,
+    GraphQL SDL, AsyncAPI or Postman collection exists on any Apartments.com
+    host, and every candidate path returns 403 or NXDOMAIN. apis[] is left empty
+    rather than inventing a product API from marketing pages.
