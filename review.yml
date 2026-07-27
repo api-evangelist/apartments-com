@@ -338,6 +338,77 @@ sources:
   - url: https://github.com/CoStarGroup
     type: GitHubOrganization
     note: 5 public repos, no API artifacts
+enrichmentRounds:
+  - date: '2026-07-26'
+    round: 2
+    finding: >-
+      Contract discovery re-run per the enrichment pipeline's "hunt harder"
+      rule. Confirmed the round-1 conclusion: no OpenAPI, GraphQL or MCP
+      contract exists at ANY host root. Newly probed and recorded this round.
+    probes:
+      - {url: 'https://api.apartments.com/api-docs', status: 404}
+      - {url: 'https://api.apartments.com/graphql', status: 403}
+      - {url: 'https://www.apartments.com/graphql', status: 403}
+      - {url: 'https://api.apartments.com/v1/openapi.json', status: 403}
+      - {url: 'https://ecom.apartments.com/openapi.json', status: 403}
+      - {url: 'https://propertyhelp.apartments.com/llms.txt', status: 404}
+      - {url: 'https://propertyhelp.apartments.com/robots.txt', status: 404}
+      - {url: 'https://propertyhelp.apartments.com/.well-known/security.txt', status: 404}
+      - {url: 'https://propertyhelp.apartments.com/.well-known/openid-configuration', status: 404}
+      - {url: 'https://propertyhelp.apartments.com/.well-known/api-catalog', status: 404}
+      - {url: 'https://www.costargroup.com/.well-known/security.txt', status: 404}
+      - {url: 'https://trust.costargroup.com/', status: 403}
+      - {url: 'https://www.costargroup.com/security', status: 403}
+      - {url: 'https://status.apartments.com/', status: '000 (NXDOMAIN)'}
+      - {url: 'https://propertyhelp.apartments.com/search?query=api', status: 200,
+         note: '17 articles, ALL about partner PMS APIs consumed BY Apartments.com
+           (Yardi CRM Flex Lead API, RealPage OneSite GetConcessions API,
+           EliseAI, Funnel, WelcomeHome) — none about an Apartments.com API'}
+    thirdPartyClaimsChecked:
+      - claim: >-
+          Aggregator listings describe an "Apartments.com API"; some search
+          summaries assert a Customer API at https://api.apartments.com/v1
+          secured with OAuth 2.0 Resource Owner Password Credentials.
+        verdict: NOT SUBSTANTIATED
+        evidence: >-
+          https://apitracker.io/a/apartments-com (Apideck) leaves developer
+          docs, API reference, API styles, authentication, OpenAPI/Swagger,
+          base endpoint and GraphQL endpoint ALL blank, and disclaims its data
+          as unverified. https://api.apartments.com/v1 returns HTTP 403. No
+          first-party page documents any such API.
+      - claim: An MCP server for Apartments.com exists (npm @striderlabs/mcp-apartments).
+        verdict: REAL BUT UNAFFILIATED
+        evidence: >-
+          Published 2026-03-15 by Strider Labs (hello@striderlabs.ai), MIT,
+          keywords include browser-automation and playwright — it drives the
+          consumer website, not an API. Recorded in
+          packages/apartments-com-packages.yml as official:false; deliberately
+          NOT wired as an MCPServer pointer.
+    legalPagesIndexedButBotBlocked: >-
+      Terms of Service, Privacy Notice, the legal-terms hub, the Rental Manager
+      login and the list-a-property entry point are all real, search-indexed
+      Apartments.com pages, but every one returns HTTP 403 to non-browser
+      clients (including WebFetch). apis.yml pointers were added on
+      search-index evidence; a direct fetch is not possible from this network.
+    artifactsWritten:
+      - conformance/apartments-com-conformance.yml
+      - authentication/apartments-com-authentication.yml
+      - packages/apartments-com-packages.yml
+      - well-known/apartments-com-well-known.yml
+      - security/apartments-com-domain-security.yml
+      - llms/apartments-com-llms.txt
+    pointersWithheld: >-
+      WellKnown/SecurityTxt (no 200), Authentication (no developer-facing API),
+      MCPServer (third-party only), SDKs (zero first-party libraries),
+      Compliance and TrustCenter (no published programme found), StatusPage and
+      Deprecation (no status page — status.apartments.com is NXDOMAIN — and no
+      versioning or deprecation policy). Withheld deliberately: the artifacts
+      record absence, and wiring their pointers would inflate the rating.
+    imageFixed: >-
+      Top-level image: was pointing at another company's icon (groq.png). Now
+      the resolved Apartments.com favicon at
+      https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apartments-com.png
+      (HTTP 200).
 actions:
   apisListed: 0
   openapiHarvested: false

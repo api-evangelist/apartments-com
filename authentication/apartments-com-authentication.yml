@@ -1,0 +1,58 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  https://propertyhelp.apartments.com/ (ILS + MLS integration collections),
+  live probes of every apartments.com host
+api_authentication: none published
+pointer: >-
+  withheld — the ergonomics check `authentication_documented` asks whether a
+  developer-facing API documents how to authenticate. Apartments.com exposes
+  no such API, so no `Authentication` pointer is wired. This artifact records
+  the ONLY credential models that exist, both of which are partner seams.
+summary:
+  types: []
+  api_key: false
+  oauth2: false
+  openid_connect: false
+  mutual_tls: false
+  developer_credentials_obtainable: false
+schemes: []
+partner_seams:
+- name: digital-feeds-ftp
+  direction: inbound (vendor -> Apartments.com)
+  mechanism: FTP username/password issued out-of-band
+  evidence: >-
+    https://propertyhelp.apartments.com/article/1041-how-do-i-connect-my-listing-to-apartmentscom-using-mri-market-connect
+    (HTTP 200): "Prerequisites — You must identify the following FTP server
+    information from the ILS you wish to add: FTP Server Name, FTP Login
+    (Username), FTP Password."
+  gate: >-
+    Requires (a) a paying Apartments.com advertising contract, (b) application
+    via Feeds@apartments.com or
+    https://www.apartments.com/advertise/advfeeds, and (c) an approved
+    third-party feed vendor. No API key is ever issued and no data returns to
+    the caller.
+- name: mls-syndication-optin
+  direction: inbound (MLS -> Apartments.com)
+  mechanism: >-
+    No credential is issued to the publisher at all — a licensed agent toggles
+    Apartments.com syndication inside their own MLS system.
+  evidence: https://propertyhelp.apartments.com/collection/1201-mls-integrations (HTTP 200)
+  gate: MLS membership (Bright MLS, ARMLS, REcolorado, OneKey MLS, SmartMLS,
+    NorthstarMLS, MLS PIN, Garden State MLS, New Jersey MLS, Aspen Glenwood MLS
+    documented) plus, in practice, a real-estate licence.
+- name: web-session-login
+  direction: human
+  mechanism: ordinary web session login (no documented developer scheme)
+  urls:
+  - https://www.apartments.com/prosumer/login/
+  - https://www.apartments.com/customers/login
+  note: >-
+    Both return HTTP 403 to non-browser clients; they are account portals for
+    landlords and renters, not an identity provider a developer can integrate.
+discovery_probes:
+- {url: 'https://www.apartments.com/.well-known/openid-configuration', status: 403}
+- {url: 'https://api.apartments.com/.well-known/openid-configuration', status: 403}
+- {url: 'https://www.apartments.com/.well-known/oauth-authorization-server', status: 403}
+- {url: 'https://api.apartments.com/.well-known/oauth-authorization-server', status: 403}
+- {url: 'https://propertyhelp.apartments.com/.well-known/openid-configuration', status: 404}

@@ -44,7 +44,7 @@ accessModel:
   - documentation
   generated: '2026-07-26'
   method: manual
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apartments-com.png
 tags:
 - Real Estate
 - United States
@@ -63,6 +63,14 @@ specificationVersion: '0.19'
 url: https://raw.githubusercontent.com/api-evangelist/apartments-com/refs/heads/main/apis.yml
 apis: []
 common:
+- type: DomainSecurity
+  url: security/apartments-com-domain-security.yml
+- type: Conformance
+  url: conformance/apartments-com-conformance.yml
+- type: Packages
+  url: packages/apartments-com-packages.yml
+- type: LLMsTxt
+  url: llms/apartments-com-llms.txt
 - type: Website
   url: https://www.apartments.com
 - type: About
@@ -87,6 +95,18 @@ common:
   url: https://renterhelp.apartments.com/
 - type: Product
   url: https://www.apartments.com/rental-manager
+- type: Login
+  url: https://www.apartments.com/prosumer/login/
+- type: SignUp
+  url: https://www.apartments.com/rental-manager/list-property-for-rent
+- type: TermsOfService
+  url: https://www.apartments.com/grow/about/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.apartments.com/grow/about/privacy-notice
+- type: Legal
+  url: https://www.apartments.com/grow/about/legal-terms
+- type: Contact
+  url: mailto:advertise@apartments.com
 - type: GitHubOrganization
   url: https://github.com/AptsCom
 - type: LinkedIn

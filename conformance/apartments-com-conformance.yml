@@ -1,0 +1,111 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  RESO certificates directory, propertyhelp.apartments.com ILS/MLS integration
+  collections, live probes of every apartments.com host (see review.yml probes)
+summary: >-
+  Apartments.com publishes no machine-readable API contract, so every
+  API-shaped standard below is asserted FALSE on evidence of absence rather
+  than left unknown. The one real machine-to-machine surface is an INBOUND
+  listings feed (vendor-syndicated XML over FTP) whose specification is
+  supplied only on request, plus per-MLS rental syndication opt-in. Nothing in
+  the estate is certified by RESO.
+standards:
+- id: reso-web-api
+  conforms: false
+  evidence: >-
+    https://www.reso.org/certificates/ (HTTP 200, 2026-07-26) carries 578
+    certification.reso.org/summary/{id} entries; case-insensitive search for
+    "CoStar", "Apartments" and "Homes.com" returns 0 matches. No CoStar Group
+    entity is certified.
+- id: reso-data-dictionary
+  conforms: false
+  evidence: >-
+    Not present in the RESO certificates list; Apartments.com's own
+    property-manager help centre returns ZERO articles for the query "reso"
+    (https://propertyhelp.apartments.com/search?query=reso, HTTP 200).
+- id: reso-rets
+  conforms: false
+  note: >-
+    Search-snippet evidence (NOT verified — source pages return HTTP 403)
+    claims apartments.com/advertise/faqfeeds says RETS and IDX (.csv) feeds are
+    accepted alongside XML. That would make Apartments.com a RETS CONSUMER of
+    third-party feeds, never a RETS server. No RETS endpoint is published.
+- id: mits
+  conforms: unverified
+  evidence: >-
+    Search-snippet evidence only: the Listings Feed Program page
+    (https://ecom.apartments.com/advertise/resources/listings-feed-program,
+    HTTP 403 to every client we control) is reported to describe the property
+    data feed as MITS-format XML, with the "Apartments.com Listings feed XML
+    Guide" available on request from Feeds@apartments.com. The guide itself is
+    not public, so conformance cannot be verified.
+- id: openapi
+  conforms: false
+  evidence: >-
+    /openapi.json, /swagger.json, /v1/openapi.json, /api-docs, /docs on
+    www.apartments.com, api.apartments.com and ecom.apartments.com all return
+    403 (Akamai Access Denied) or 404; propertyhelp.apartments.com returns 404.
+- id: odata
+  conforms: false
+  evidence: >-
+    https://api.apartments.com/$metadata and https://www.apartments.com/$metadata
+    both return HTTP 403. No OData service root is documented anywhere.
+- id: graphql
+  conforms: false
+  evidence: >-
+    https://api.apartments.com/graphql and https://www.apartments.com/graphql
+    return HTTP 403; introspection is not reachable and no GraphQL surface is
+    documented.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No event or streaming surface published; help-centre search for "webhook"
+    returns zero articles.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No OAuth authorization server published. /.well-known/openid-configuration
+    and /.well-known/oauth-authorization-server return 403 on www/api/ecom and
+    404 on propertyhelp.
+- id: openid-connect
+  conforms: false
+  evidence: same as oauth2 — no discovery document at any host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: no API responses to inspect.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt returns 403 on www.apartments.com,
+    api.apartments.com and ecom.apartments.com, and 404 on
+    propertyhelp.apartments.com and www.costargroup.com.
+- id: ftp-listings-feed
+  conforms: true
+  evidence: >-
+    https://propertyhelp.apartments.com/article/1041-how-do-i-connect-my-listing-to-apartmentscom-using-mri-market-connect
+    (HTTP 200) states the prerequisites as "FTP Server Name, FTP Login
+    (Username), FTP Password" — the documented transport for ILS listing
+    syndication into Apartments.com.
+third_party_claims:
+- source: https://apitracker.io/a/apartments-com
+  checked: '2026-07-26'
+  finding: >-
+    Aggregator profile (Apideck API Tracker). Developer docs, API reference,
+    API styles, authentication, OpenAPI/Swagger, base endpoint and GraphQL
+    endpoint fields are ALL blank or dashes; the page's own disclaimer says the
+    data is unverified. It links no official Apartments.com developer surface.
+    Confirms absence rather than contradicting it.
+- source: search-engine summaries asserting an "Apartments.com Customer API"
+    with OAuth 2.0 Resource Owner Password Credentials at
+    https://api.apartments.com/v1
+  checked: '2026-07-26'
+  finding: >-
+    NOT SUBSTANTIATED. https://api.apartments.com/v1 returns HTTP 403 from the
+    same Akamai edge as www; no such documentation exists on any reachable
+    Apartments.com host and the claim traces to no first-party page. Recorded
+    so future rounds do not re-import it as fact.
+compliance_pointer: >-
+  withheld — no published certification or compliance programme (SOC 2, ISO
+  27001, PCI DSS, HIPAA, FedRAMP) was found for Apartments.com;
+  trust.costargroup.com and costargroup.com/security both return HTTP 403.

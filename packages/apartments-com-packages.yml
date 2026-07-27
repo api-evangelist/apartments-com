@@ -1,0 +1,64 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  npm registry search, PyPI, and the Apartments.com help centre / GitHub orgs
+  (AptsCom, CoStarGroup)
+official_packages: []
+official_note: >-
+  Apartments.com publishes NO first-party client libraries in any registry.
+  Neither https://github.com/AptsCom (15 public repos, newest first-party
+  content circa 2014, all forks or training scaffolding) nor
+  https://github.com/CoStarGroup (5 public repos, JavaScript tooling forks)
+  contains an SDK, and there is no API for an SDK to wrap. No SDKs pointer is
+  wired in apis.yml — the sdk_count checks must stay at zero.
+registries_probed:
+- registry: npm
+  query: apartments.com
+  official_hits: 0
+- registry: pypi
+  names_probed: [apartments-com, apartmentscom, apartments]
+  official_hits: 0
+- registry: rubygems
+  official_hits: 0
+- registry: packagist
+  official_hits: 0
+- registry: nuget
+  official_hits: 0
+- registry: crates.io
+  official_hits: 0
+- registry: maven-central
+  official_hits: 0
+- registry: pkg.go.dev
+  official_hits: 0
+third_party_packages:
+- language: javascript
+  registry: npm
+  name: "@striderlabs/mcp-apartments"
+  version: 1.0.0
+  published: '2026-03-15'
+  url: https://www.npmjs.com/package/@striderlabs/mcp-apartments
+  install: npm install @striderlabs/mcp-apartments
+  official: false
+  publisher: Strider Labs (hello@striderlabs.ai, https://striderlabs.ai)
+  license: MIT
+  description: >-
+    "MCP server for Apartments.com - let AI agents search rentals, compare
+    properties, schedule tours, and submit applications" (registry
+    description). Keywords include browser-automation and playwright, i.e. it
+    drives the consumer website rather than calling any API — consistent with
+    Apartments.com publishing none.
+  note: >-
+    Unaffiliated with CoStar Group. Recorded for provenance only; NOT wired as
+    an MCPServer pointer in apis.yml because it is not provider-published.
+- language: python
+  registry: pypi
+  name: apartments
+  version: 0.0.1
+  url: https://pypi.org/project/apartments/
+  install: pip install apartments
+  official: false
+  publisher: Ira Horecka (https://github.com/irahorecka/apartments)
+  description: >-
+    Third-party "apartments API library" — an independent scraper of the
+    Apartments.com website, not a client for a published API.
+  note: Unaffiliated with CoStar Group.

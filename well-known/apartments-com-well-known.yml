@@ -1,0 +1,53 @@
+generated: '2026-07-26'
+method: searched
+source: live probes, 2026-07-26, Chrome 126 desktop UA
+result: none — no /.well-known/ document is served by any Apartments.com host
+pointer: >-
+  withheld — no document returned HTTP 200, so no WellKnown / SecurityTxt /
+  APICatalog pointer is wired into apis.yml. This file is the negative record
+  so future rounds do not re-probe blind.
+hosts:
+- host: https://www.apartments.com
+  documents:
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/openid-configuration, status: 403}
+  - {path: /.well-known/oauth-authorization-server, status: 403}
+  - {path: /.well-known/api-catalog, status: 403}
+  - {path: /.well-known/ai-plugin.json, status: 403}
+  - {path: /robots.txt, status: 403}
+  note: Akamai "Access Denied" edge blocks every non-browser request, robots.txt included.
+- host: https://api.apartments.com
+  documents:
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/openid-configuration, status: 403}
+  - {path: /.well-known/oauth-authorization-server, status: 403}
+  - {path: /.well-known/api-catalog, status: 403}
+  - {path: /.well-known/ai-plugin.json, status: 403}
+  note: >-
+    Resolves to the same Akamai edge as www (www-ipv6.apartments.com.edgekey.net);
+    not a distinct API host. /api-docs returns 404, everything else 403.
+- host: https://ecom.apartments.com
+  documents:
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/openid-configuration, status: 403}
+  - {path: /.well-known/oauth-authorization-server, status: 403}
+  - {path: /.well-known/api-catalog, status: 403}
+  - {path: /.well-known/ai-plugin.json, status: 403}
+- host: https://propertyhelp.apartments.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /llms.txt, status: 404}
+  - {path: /robots.txt, status: 404}
+  note: >-
+    HelpScout-hosted help centre — the only Apartments.com host that answers
+    non-browser clients (collection and article pages return 200), but it
+    serves no discovery documents.
+- host: https://www.costargroup.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /robots.txt, status: 403}
+  note: parent company host, probed for a group-level security.txt; none.
