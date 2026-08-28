@@ -32,6 +32,17 @@ description: >-
   RESO certificates list, and its own property-manager help centre returns zero
   results for "RESO". It is a consumer of MLS rental feeds, not a certified
   RESO endpoint, and no unlicensed open dataset is published.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: approval
