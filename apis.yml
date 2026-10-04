@@ -57,7 +57,7 @@ accessModel:
   method: manual
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apartments-com.png
 tags:
-- Real-Estate
+- Real Estate
 - United States
 - Rentals
 - Property Listings
@@ -80,6 +80,7 @@ tags_raw:
 - MLS
 - PropTech
 - CoStar Group
+- Real-Estate
 created: '2026-07-26'
 modified: '2026-07-26'
 specificationVersion: '0.23'
