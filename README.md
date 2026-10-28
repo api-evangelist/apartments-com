@@ -1,4 +1,4 @@
-# Apartments.com (apartments-com)
+# Apartments.com
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,81 +64,86 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Apartments.com is the largest United States rental-listings marketplace, owned by CoStar Group since its 2014 acquisition and operated from Arlington, Virginia as the anchor of the Apartments.com Network. It sits on the demand side of the US residential value chain as an Internet Listing Service (ILS): apartment owners and property managers buy advertising, and their inventory flows in from property management systems rather than from any public API. Its API posture is closed — no developer portal, no OpenAPI or OData `$metadata` contract, no SDK, no webhooks, and no RESO certification.
+Apartments.com is the largest United States rental-listings marketplace, owned by CoStar Group since its 2014 acquisition and operated from Arlington, Virginia as the anchor of the Apartments.com Network — a group of consumer rental sites that also includes ApartmentFinder.com, ApartmentHomeLiving.com, ForRent.com, ForRentUniversity.com, WestsideRentals.com, Apartamentos.com, After55.com and CorporateHousing.com. It sits on the demand side of the US residential value chain as an Internet Listing Service (ILS): apartment owners and property managers buy advertising, and their inventory, availability, pricing, media, concessions and fee data flows in from property management systems (Yardi, RealPage, Entrata, MRI, AppFolio, ResMan, Rent Manager, Funnel, EliseAI and others) rather than from any public API, while leads flow back out to the advertiser's CRM. Its API posture is closed. Apartments.com publishes no developer portal, no OpenAPI or OData $metadata contract, no SDK, no webhooks and no Postman collection; developer.apartments.com, developers.apartments.com and docs.apartments.com do not resolve in DNS, and api.apartments.com resolves only to the same Akamai edge that returns HTTP 403 Access Denied to every non-browser request, including robots.txt. The one documented machine-to-machine seam is the Digital Feeds Program — an approval-and-contract path in which an approved third-party feed vendor syndicates a paying advertiser's listings into Apartments.com over FTP using an XML listings feed whose specification guide is available only on request to Feeds@apartments.com. A second inbound seam lets licensed agents opt in to rental-listing syndication through their own MLS (Bright MLS, ARMLS, REcolorado, OneKey MLS, SmartMLS, NorthstarMLS, MLS PIN, Garden State MLS, New Jersey MLS and Aspen Glenwood MLS are documented), which requires MLS membership. On RESO, the honest reading is absence rather than "certified but unreachable": Apartments.com does not appear anywhere in the RESO certificates list, and its own property-manager help centre returns zero results for "RESO". It is a consumer of MLS rental feeds, not a certified RESO endpoint, and no unlicensed open dataset is published.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/apartments-com/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/apartments-com/refs/heads/main/apis.yml)
+**Areas:** Real Estate · United States · Rentals · Property Listings · Multifamily · Internet Listing Service · Listings Syndication · Property Management · MLS · PropTech · CoStar Group
 
-## Tags
+## Apartments.com on APIs.io
 
-- Real Estate
-- United States
-- Rentals
-- Property Listings
-- Multifamily
-- Internet Listing Service
-- Listings Syndication
-- Property Management
-- MLS
-- PropTech
-- CoStar Group
+Everything profiled for Apartments.com is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/apartments-com/](https://apis.io/providers/apartments-com/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-26
-- **Modified:** 2026-07-26
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Security (2)
 
-None. Apartments.com publishes no public, documented developer API.
+Authentication, trust centre, and vulnerability disclosure.
 
-Every candidate developer host is either absent from DNS (`developer.apartments.com`, `developers.apartments.com`, `docs.apartments.com`, `partners.apartments.com`, `feeds.apartments.com`, `data.apartments.com`) or served by the same Akamai edge that returns `HTTP 403 Access Denied` to non-browser clients (`www.apartments.com`, `api.apartments.com`) — including `/robots.txt`, `/openapi.json`, `/swagger.json`, `/api-docs`, `/$metadata`, and `/.well-known/openid-configuration`.
+- [Apartments Com Authentication](https://apis.io/security/apartments-com/apartments-com-authentication/)
+- [Apartments Com Domain Security](https://apis.io/security/apartments-com/apartments-com-domain-security/)
 
-## RESO Posture
+## Where to find this API
 
-**Not certified.** Apartments.com does not appear in the [RESO certificates list](https://www.reso.org/certificates/) (578 certificate entries checked on 2026-07-26; zero matches for "CoStar", "Apartments" or "Homes.com"), and its own property-manager help centre returns **zero** articles for a search on "RESO".
-
-Apartments.com is a downstream **consumer** of MLS rental listings, not a certified RESO Web API endpoint. Licensed agents opt in to Apartments.com syndication from inside their own MLS; ten MLSs are documented individually — Bright MLS, ARMLS, REcolorado, OneKey MLS, SmartMLS, Northstar MLS, MLS Property Information Network, Garden State MLS, New Jersey MLS, and Aspen Glenwood MLS. Data travels *into* Apartments.com. Nothing comes back out to a developer.
-
-## Access Gate
-
-`partner-only`. There is no path by which an independent developer obtains credentials.
-
-1. **Digital Feeds Program** — be a paying Apartments.com advertiser, apply by emailing `Feeds@apartments.com`, and route data through an approved third-party feed vendor. The listings-feed XML guide is not published; it is supplied on request. Documented transport is FTP (server name, login, password).
-2. **MLS syndication opt-in** — hold membership in a participating MLS and toggle Apartments.com syndication inside that MLS's own system.
-
-Neither issues an API key. Neither returns data to the caller. No open, unlicensed dataset is published.
-
-## Auth Model
-
-None published. Feed authentication is out-of-band FTP username/password issued between the feed vendor and Apartments.com. Advertiser and renter accounts use ordinary web session logins.
-
-## Webhooks, SDKs, Postman
-
-None. Lead delivery into an advertiser's CRM is configured inside the PMS/CRM vendor's own product (Yardi, Rent Manager, WelcomeHome, EliseAI), not through any Apartments.com-published contract.
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.apartments.com)
-- [About](https://www.apartments.com/about)
-- [Parent — CoStar Group](https://www.costargroup.com/about-us/brands/apartmentscom)
-- [Property Owner and Manager Help Center](https://propertyhelp.apartments.com/)
-- [ILS Integrations](https://propertyhelp.apartments.com/collection/1044-ils-integrations)
-- [MLS Integrations](https://propertyhelp.apartments.com/collection/1201-mls-integrations)
-- [What is a Feed?](https://propertyhelp.apartments.com/article/439-what-is-a-feed)
-- [Listings Feed Program](https://ecom.apartments.com/advertise/resources/listings-feed-program)
-- [Digital Feeds Program](https://www.apartments.com/advertise/advfeeds)
-- [Renter Help Center](https://renterhelp.apartments.com/)
-- [Rental Manager](https://www.apartments.com/rental-manager)
-- [GitHub Organization](https://github.com/AptsCom)
-- [LinkedIn](https://www.linkedin.com/company/apartments-com)
-- [Twitter](https://x.com/apartmentscom)
-- [YouTube](https://www.youtube.com/@apartmentscom)
-- [Instagram](https://www.instagram.com/apartmentscom/)
+- [Documentation](https://propertyhelp.apartments.com/collection/1044-ils-integrations)
+- [Sign up](https://www.apartments.com/rental-manager/list-property-for-rent)
+- [Support](https://propertyhelp.apartments.com/)
+- [Terms of service](https://www.apartments.com/grow/about/terms-of-service)
+- [Privacy policy](https://www.apartments.com/grow/about/privacy-notice)
+- [GitHub](https://github.com/AptsCom)
 
-## Review
+## API Evangelist rating
 
-See [review.yml](review.yml) for every URL probed, its HTTP status, the RESO posture block, and the verbatim quotes behind the access-gate classification.
+**Kin Score 17.6** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-## Maintainers
+| Facet | Score |
+|---|---|
+| Discoverability | 48.2 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 14.3 |
+| Access clarity | 34.2 |
 
-- Kin Lane — kin@apievangelist.com
+**Agent readiness 0.0** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 18.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/apartments-com/](https://apis.io/providers/apartments-com/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Apartments.com: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/apartments-com/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
